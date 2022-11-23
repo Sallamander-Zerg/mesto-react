@@ -1,0 +1,11 @@
+.header__logo {
+  grid-area: header_logo;
+  object-fit: contain;
+}
+@media screen and (max-width: 948px) {
+  .header__logo {
+    width: 103.74px;
+    height: 24.4px;
+    margin-left: 27px;
+  }
+}

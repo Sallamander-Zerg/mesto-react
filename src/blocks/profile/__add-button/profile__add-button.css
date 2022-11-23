@@ -1,0 +1,27 @@
+.profile__add-button {
+  grid-area: addBatoon;
+  width: 150px;
+  height: 50px;
+  align-self: center;
+  justify-self: end;
+  color: #ffffff;
+  background: black;
+  border: 2px solid #ffffff;
+  background-image: url(../../../images/add.jpg);
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.profile__add-button:hover {
+  opacity: 0.6;
+}
+@media screen and (max-width: 948px) {
+  .profile__add-button {
+    width: 282px;
+    justify-self: center;
+    margin-top: 36px;
+    background-size: 16px 16px;
+  }
+}

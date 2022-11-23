@@ -1,0 +1,13 @@
+.profile__inline {
+  display: flex;
+  align-items: center;
+}
+@media screen and (max-width: 948px) {
+  .profile__inline {
+    align-content: center;
+    max-width: 219px;
+    width: 100%;
+    margin-left: 45px;
+    margin-right: auto;
+  }
+}

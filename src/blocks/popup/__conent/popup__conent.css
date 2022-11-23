@@ -1,0 +1,13 @@
+.popup__conent {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+  margin-right: 8px;
+  block-size: auto;
+  writing-mode: horizontal-tb;
+}
+@media screen and (max-width: 740px) {
+  .popup__conent {
+    margin: 0;
+  }
+}

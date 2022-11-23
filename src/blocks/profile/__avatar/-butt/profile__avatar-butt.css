@@ -1,0 +1,22 @@
+.profile__avatar-butt {
+  background-image: url(../../../../images/editavatar.svg);
+  border-radius: 50%;
+  max-width: 120px;
+  max-height: 120px;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  border: none;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: 0.8s ease;
+  position:absolute;
+  padding: 0;
+}
+.profile__avatar-butt:hover {
+  opacity: 0.8;
+  background-color: #000;
+}

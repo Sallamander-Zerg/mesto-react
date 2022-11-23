@@ -1,0 +1,17 @@
+.popup__error-block {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  max-width: 358px;
+  width: 100%;
+  margin-bottom: 0px;
+}
+.popup__error-block:nth-child(3n) {
+  margin-bottom: 30px;
+}
+@media screen and (max-width: 948px) {
+  .popup__error-block {
+    margin-left: 36px;
+  }
+}

@@ -1,0 +1,11 @@
+.element__description {
+  display: flex;
+  flex-direction: row;
+  max-width: 246px;
+  width: 100%;
+  padding: 0;
+  list-style-type: none;
+  justify-content: space-between;
+  align-items: center;
+  margin: 25px 20px 25px 21px;
+}
