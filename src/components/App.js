@@ -3,8 +3,18 @@ import Footer from './Footer.js';
 import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import { useState } from 'react';
-import  '../utils/Api';
+import Api from  '../utils/Api';
 function App() {
+  const cards = () =>{
+    fetch(`${Api.api.baseUrl}/cards`, {
+    headers: Api.api.headers
+  }).then(res => {res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)});
+  }
+  const user = () =>{
+    fetch(`${Api.api.baseUrl}/users/me`, {
+    headers: Api.api.headers
+  }).then(res => {res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)});
+ }
   Promise.all([cards,user])
   .then(([initialCards, userData]) => {
     console.log(initialCards)
