@@ -23,6 +23,46 @@ function App(props) {
     });
     setIsCardPopupOpen(true)
   } 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+  const [initialCards, Setcarddata] = useState(0);
+  useEffect(() => {
+    Api.getMassCards().then((res) => {
+      Setcarddata(
+        res.map(function (Card) {
+          return (
+            <article class="element" key={Card.id}>
+              <button
+                class="element__delete"
+                onClick={()=>{handleConfirmationClick()}}
+              ></button>
+              <img
+                class="element__photo"
+                src={Card.link ? Card.link : "ошибка"}
+                alt={Card.name ? Card.name : "ошибка"}
+                onClick={()=>{
+                  handleCardClick(Card.link,Card.name)
+                }}
+              />
+              <div class="element__description">
+                <h2 class="element__header">
+                  {Card.name ? Card.name : "ошибка"}
+                </h2>
+                <div class="element__like-contaner">
+                  <button type="button" class="element__like-button"></button>
+                  <span class="element__likes-number">{Card.likes.length}</span>
+                </div>
+              </div>
+            </article>
+          );
+        })
+      );
+    });
+  }, []);
+=======
+>>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
+>>>>>>> Stashed changes
   function handleConfirmationClick() {
     setIsConfirmationPopupOpen(true);
   }
@@ -53,6 +93,13 @@ function App(props) {
           <Card
             onConfirmationProfile={handleConfirmationClick}
             onCardClick={handleCardClick}
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+            initialCards={initialCards}
+=======
+>>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
+>>>>>>> Stashed changes
           />
         }
       />
@@ -62,7 +109,15 @@ function App(props) {
         name="edit"
         isOpen={isEditProfilePopupOpen}
         isClose={closeAllPopups}
+<<<<<<< Updated upstream
         Overlay={closeAllPopups}
+=======
+<<<<<<< HEAD
+        isOverlay={closeAllPopups}
+=======
+        Overlay={closeAllPopups}
+>>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
+>>>>>>> Stashed changes
         childrens={
           <>
             <input
@@ -93,14 +148,30 @@ function App(props) {
             </p>
           </>
         }
+<<<<<<< Updated upstream
         ButtonTitle="Сохранить"
+=======
+<<<<<<< HEAD
+        buttonTitle="Сохранить"
+=======
+        ButtonTitle="Сохранить"
+>>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
+>>>>>>> Stashed changes
       />
       <PopupWithForm
         title="Добавить карточку"
         name="Add"
         isOpen={isAddPlacePopupOpen}
         isClose={closeAllPopups}
+<<<<<<< Updated upstream
         Overlay={closeAllPopups}
+=======
+<<<<<<< HEAD
+        isOverlay={closeAllPopups}
+=======
+        Overlay={closeAllPopups}
+>>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
+>>>>>>> Stashed changes
         childrens={
           <>
             <input
@@ -128,14 +199,30 @@ function App(props) {
             </p>
           </>
         }
+<<<<<<< Updated upstream
         ButtonTitle="Сохранить"
+=======
+<<<<<<< HEAD
+        buttonTitle="Сохранить"
+=======
+        ButtonTitle="Сохранить"
+>>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
+>>>>>>> Stashed changes
       />
       <PopupWithForm
         title="Обновить аватар"
         name="Avatar"
         isOpen={isEditAvatarPopupOpen}
         isClose={closeAllPopups}
+<<<<<<< Updated upstream
         Overlay={closeAllPopups}
+=======
+<<<<<<< HEAD
+        isOverlay={closeAllPopups}
+=======
+        Overlay={closeAllPopups}
+>>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
+>>>>>>> Stashed changes
         childrens={
           <>
             {" "}
@@ -151,17 +238,38 @@ function App(props) {
             </p>
           </>
         }
+<<<<<<< Updated upstream
         ButtonTitle="Сохранить"
+=======
+<<<<<<< HEAD
+        buttonTitle="Сохранить"
+=======
+        ButtonTitle="Сохранить"
+>>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
+>>>>>>> Stashed changes
       />
       <PopupWithForm
         title="Вы уверены?"
         name="Confirmation"
         isOpen={isConfirmationPopupOpen}
         isClose={closeAllPopups}
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+        isOverlay={closeAllPopups}
+        ButtonTitle="Да"
+      />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} onOpen={isCardPopupOpen} isOverlay={closeAllPopups} />
+=======
+>>>>>>> Stashed changes
         Overlay={closeAllPopups}
         ButtonTitle="Да"
       />
       <ImagePopup card={selectedCard} onClose={closeAllPopups} onOpen={isCardPopupOpen} />
+<<<<<<< Updated upstream
+=======
+>>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
+>>>>>>> Stashed changes
     </>
   );
 }

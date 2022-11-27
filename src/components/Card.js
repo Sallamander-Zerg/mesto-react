@@ -1,4 +1,11 @@
 import { useEffect, useState } from "react";
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+const Card = (props) => {
+  return <section className="elements">{props.initialCards}</section>;
+=======
+>>>>>>> Stashed changes
 import { default as Api } from "../utils/Api.js";
 const Card = (props) => {
   const [initialCards, Setcarddata] = useState(0);
@@ -37,5 +44,9 @@ const Card = (props) => {
   }, []);
   console.log(initialCards);
   return <section className="elements">{initialCards}</section>;
+<<<<<<< Updated upstream
+=======
+>>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
+>>>>>>> Stashed changes
 };
 export default Card;
