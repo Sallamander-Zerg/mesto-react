@@ -23,9 +23,6 @@ function App(props) {
     });
     setIsCardPopupOpen(true)
   } 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
   const [initialCards, Setcarddata] = useState(0);
   useEffect(() => {
     Api.getMassCards().then((res) => {
@@ -60,9 +57,6 @@ function App(props) {
       );
     });
   }, []);
-=======
->>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
->>>>>>> Stashed changes
   function handleConfirmationClick() {
     setIsConfirmationPopupOpen(true);
   }
@@ -93,13 +87,7 @@ function App(props) {
           <Card
             onConfirmationProfile={handleConfirmationClick}
             onCardClick={handleCardClick}
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
             initialCards={initialCards}
-=======
->>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
->>>>>>> Stashed changes
           />
         }
       />
@@ -109,15 +97,7 @@ function App(props) {
         name="edit"
         isOpen={isEditProfilePopupOpen}
         isClose={closeAllPopups}
-<<<<<<< Updated upstream
-        Overlay={closeAllPopups}
-=======
-<<<<<<< HEAD
         isOverlay={closeAllPopups}
-=======
-        Overlay={closeAllPopups}
->>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
->>>>>>> Stashed changes
         childrens={
           <>
             <input
@@ -148,30 +128,14 @@ function App(props) {
             </p>
           </>
         }
-<<<<<<< Updated upstream
-        ButtonTitle="Сохранить"
-=======
-<<<<<<< HEAD
         buttonTitle="Сохранить"
-=======
-        ButtonTitle="Сохранить"
->>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
->>>>>>> Stashed changes
       />
       <PopupWithForm
         title="Добавить карточку"
         name="Add"
         isOpen={isAddPlacePopupOpen}
         isClose={closeAllPopups}
-<<<<<<< Updated upstream
-        Overlay={closeAllPopups}
-=======
-<<<<<<< HEAD
         isOverlay={closeAllPopups}
-=======
-        Overlay={closeAllPopups}
->>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
->>>>>>> Stashed changes
         childrens={
           <>
             <input
@@ -199,30 +163,14 @@ function App(props) {
             </p>
           </>
         }
-<<<<<<< Updated upstream
-        ButtonTitle="Сохранить"
-=======
-<<<<<<< HEAD
         buttonTitle="Сохранить"
-=======
-        ButtonTitle="Сохранить"
->>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
->>>>>>> Stashed changes
       />
       <PopupWithForm
         title="Обновить аватар"
         name="Avatar"
         isOpen={isEditAvatarPopupOpen}
         isClose={closeAllPopups}
-<<<<<<< Updated upstream
-        Overlay={closeAllPopups}
-=======
-<<<<<<< HEAD
         isOverlay={closeAllPopups}
-=======
-        Overlay={closeAllPopups}
->>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
->>>>>>> Stashed changes
         childrens={
           <>
             {" "}
@@ -238,38 +186,17 @@ function App(props) {
             </p>
           </>
         }
-<<<<<<< Updated upstream
-        ButtonTitle="Сохранить"
-=======
-<<<<<<< HEAD
         buttonTitle="Сохранить"
-=======
-        ButtonTitle="Сохранить"
->>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
->>>>>>> Stashed changes
       />
       <PopupWithForm
         title="Вы уверены?"
         name="Confirmation"
         isOpen={isConfirmationPopupOpen}
         isClose={closeAllPopups}
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
         isOverlay={closeAllPopups}
         ButtonTitle="Да"
       />
       <ImagePopup card={selectedCard} onClose={closeAllPopups} onOpen={isCardPopupOpen} isOverlay={closeAllPopups} />
-=======
->>>>>>> Stashed changes
-        Overlay={closeAllPopups}
-        ButtonTitle="Да"
-      />
-      <ImagePopup card={selectedCard} onClose={closeAllPopups} onOpen={isCardPopupOpen} />
-<<<<<<< Updated upstream
-=======
->>>>>>> 781f1d99cf06abdc21a8f9c60f50a98c76db7570
->>>>>>> Stashed changes
     </>
   );
 }
