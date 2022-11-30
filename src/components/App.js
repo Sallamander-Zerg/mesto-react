@@ -1,8 +1,9 @@
 import Header from "./Heder";
 import Footer from "./Footer.js";
 import Main from "./Main";
+import React from 'react';
 import PopupWithForm from "./PopupWithForm";
-import { useEffect, useState } from "react";
+import { useEffect, useState, setState } from "react";
 import Card from "./Card";
 import ImagePopup from "./ImagePopup";
 import { default as Api } from "../utils/Api.js";
@@ -11,52 +12,29 @@ function App(props) {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
-  const [isCardPopupOpen,setIsCardPopupOpen]=useState(false);
-  const [selectedCard, setSelectedCard] = useState({link:'',name:''});
-  function handleCardClick(setLink,setName) {
-    console.log("напас")
-    console.log(setLink,setName)
-    setSelectedCard(
-      {
-      link:setLink,
-      name:setName
-    });
-    setIsCardPopupOpen(true)
-  } 
-  const [initialCards, Setcarddata] = useState(0);
-  useEffect(() => {
-    Api.getMassCards().then((res) => {
-      Setcarddata(
-        res.map(function (Card) {
-          return (
-            <article class="element" key={Card.id}>
-              <button
-                class="element__delete"
-                onClick={()=>{handleConfirmationClick()}}
-              ></button>
-              <img
-                class="element__photo"
-                src={Card.link ? Card.link : "ошибка"}
-                alt={Card.name ? Card.name : "ошибка"}
-                onClick={()=>{
-                  handleCardClick(Card.link,Card.name)
-                }}
-              />
-              <div class="element__description">
-                <h2 class="element__header">
-                  {Card.name ? Card.name : "ошибка"}
-                </h2>
-                <div class="element__like-contaner">
-                  <button type="button" class="element__like-button"></button>
-                  <span class="element__likes-number">{Card.likes.length}</span>
-                </div>
-              </div>
-            </article>
-          );
-        })
-      );
-    });
+  const [isCardPopupOpen, setIsCardPopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({ link: "", name: "" });
+  const [initialCards, setCardData] = React.useState([]);
+  const [isLoadingInitialData, setIsLoadingInitialData] = React.useState(false);
+  React.useEffect(() => {
+    setIsLoadingInitialData(true);
+     Api.getMassCards()
+      .then((data) => {
+        setCardData(data)
+      })
   }, []);
+  console.log(initialCards);
+
+  function handleCardClick(setLink, setName) {
+    console.log("напас");
+    console.log(setLink, setName);
+    setSelectedCard({
+      link: setLink,
+      name: setName,
+    });
+    setIsCardPopupOpen(true);
+  }
+
   function handleConfirmationClick() {
     setIsConfirmationPopupOpen(true);
   }
@@ -84,11 +62,13 @@ function App(props) {
         onAddProfile={handleAddPlaceClick}
         onAvatarProfile={handleEditAvatarClick}
         Cards={
-          <Card
-            onConfirmationProfile={handleConfirmationClick}
-            onCardClick={handleCardClick}
-            initialCards={initialCards}
-          />
+       initialCards.map(element=>{
+        return( <Card
+          card = {element}
+          onConfirmationProfile={handleConfirmationClick}
+          onCardClick={handleCardClick}
+        />)
+       })
         }
       />
       <Footer />
@@ -194,9 +174,14 @@ function App(props) {
         isOpen={isConfirmationPopupOpen}
         isClose={closeAllPopups}
         isOverlay={closeAllPopups}
-        ButtonTitle="Да"
+        buttonTitle="Да"
       />
-      <ImagePopup card={selectedCard} onClose={closeAllPopups} onOpen={isCardPopupOpen} isOverlay={closeAllPopups} />
+      <ImagePopup
+        card={selectedCard}
+        onClose={closeAllPopups}
+        onOpen={isCardPopupOpen}
+        isOverlay={closeAllPopups}
+      />
     </>
   );
 }

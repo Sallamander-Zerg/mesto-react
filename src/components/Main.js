@@ -23,7 +23,9 @@ function Main(props) {
     </div>
     <button type="button"  className="profile__add-button"  data-modal="AddCard" onClick={props.onAddProfile}></button>
 </section>
+<section className="elements">
 {props.Cards}
+</section>
 </main>
 
     );
