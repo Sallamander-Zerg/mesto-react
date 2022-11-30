@@ -1,0 +1,10 @@
+.root {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, auto);
+  grid-template-areas:
+    "header header header header"
+    "conntent conntent conntent conntent"
+    "footer footer footer footer";
+}

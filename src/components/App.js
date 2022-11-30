@@ -64,6 +64,7 @@ function App(props) {
         Cards={
        initialCards.map(element=>{
         return( <Card
+          key ={element._id}
           card = {element}
           onConfirmationProfile={handleConfirmationClick}
           onCardClick={handleCardClick}
@@ -83,28 +84,28 @@ function App(props) {
             <input
               name="fieldName"
               type="text"
-              class="popup__field field-name"
+              className="popup__field field-name"
               pattern="[0-9А-Яа-яa-zA-Z- ]{2,}"
               placeholder="Имя"
-              minlength="2"
-              maxlength="40"
+              minLength="2"
+              maxLength="40"
               required
             />
-            <p class="popup__error-block">
-              <span class="popup__field-error fieldName-error"></span>
+            <p className="popup__error-block">
+              <span className="popup__field-error fieldName-error"></span>
             </p>
             <input
               name="fieldJob"
               type="text"
-              class="popup__field field-job"
+              className="popup__field field-job"
               pattern="[0-9А-Яа-яa-zA-Z- ]{2,}"
               placeholder="О себе"
-              minlength="2"
-              maxlength="200"
+              minLength="2"
+              maxLength="200"
               required
             />
-            <p class="popup__error-block">
-              <span class="popup__field-error fieldJob-error"></span>
+            <p  className="popup__error-block">
+              <span  className="popup__field-error fieldJob-error"></span>
             </p>
           </>
         }
@@ -121,25 +122,25 @@ function App(props) {
             <input
               name="fieldMesto"
               type="text"
-              class="popup__field field-alt"
+              className="popup__field field-alt"
               placeholder="Название"
               pattern="[0-9А-Яа-яa-zA-Z- ]{2,}"
-              minlength="2"
-              maxlength="30"
+              minLength="2"
+              maxLength="30"
               required
             />
-            <p class="popup__error-block">
-              <span class="popup__field-error fieldMesto-error"></span>
+            <p className="popup__error-block">
+              <span className="popup__field-error fieldMesto-error"></span>
             </p>
             <input
               name="fieldSrc"
               type="url"
-              class="popup__field field-src"
+              className="popup__field field-src"
               placeholder="Ссылка на картинку"
               required
             />
-            <p class="popup__error-block">
-              <span class="popup__field-error fieldSrc-error"></span>
+            <p className="popup__error-block">
+              <span className="popup__field-error fieldSrc-error"></span>
             </p>
           </>
         }
@@ -157,12 +158,12 @@ function App(props) {
             <input
               name="fieldAvatarSrc"
               type="url"
-              class="popup__field field-avatr-src"
+              className="popup__field field-avatr-src"
               placeholder="Ссылка на картинку"
               required
             />
-            <p class="popup__error-block">
-              <span class="popup__field-error fieldAvatarSrc-error"></span>
+            <p className="popup__error-block">
+              <span className="popup__field-error fieldAvatarSrc-error"></span>
             </p>
           </>
         }
