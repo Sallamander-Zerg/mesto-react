@@ -23,13 +23,19 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name: data.fieldMesto,
-        link: data.fieldSrc
+        name: data.name,
+        link: data.link
       })
     })
       .then(res => this._parseError(res));
   }
-
+  changeLikeCardStatus(cardId, isLiked) {
+    if (isLiked) {
+      return this.deleteLike(cardId);
+    } else {
+      return this.setLike(cardId);
+    }
+  }
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
@@ -67,8 +73,8 @@ class Api {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: data.fieldName,
-        about: data.fieldJob
+        name: data.name,
+        about: data.about
       })
     })
       .then(res => this._parseError(res));
@@ -79,7 +85,7 @@ class Api {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: data.fieldAvatarSrc
+        avatar: data.avatar
       })
     })
       .then(res => this._parseError(res));

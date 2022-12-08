@@ -2,12 +2,16 @@ import Header from "./Heder";
 import Footer from "./Footer.js";
 import Main from "./Main";
 import React from 'react';
-import PopupWithForm from "./PopupWithForm";
-import { useEffect, useState, setState } from "react";
+import { useState } from "react";
 import Card from "./Card";
 import ImagePopup from "./ImagePopup";
+import { CurrentUserContext } from'../context/CurrentUserContext';
 import { default as Api } from "../utils/Api.js";
-function App(props) {
+import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopupp from "./EditAvatarPopup";
+import AddProfilePopup from "./AddProfilePopup"
+import PopupConfirm from"./PopupConfirm"
+function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -15,28 +19,98 @@ function App(props) {
   const [isCardPopupOpen, setIsCardPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({ link: "", name: "" });
   const [initialCards, setCardData] = React.useState([]);
-  const [isLoadingInitialData, setIsLoadingInitialData] = React.useState(false);
+  const [isLoadingSetUserInfo, setIsLoadingSetUserInfo] = React.useState(false);
+  const [currentUser, setCurrentUser] =React.useState({});
+  const [cardForDelete, setCardForDelete] = React.useState({})
+  React.useEffect(()=>{
+        Api.getUserInfo()
+        .then((res)=>{
+          setCurrentUser(res)
+        })
+    },[])
   React.useEffect(() => {
-    setIsLoadingInitialData(true);
      Api.getMassCards()
       .then((data) => {
         setCardData(data)
       })
   }, []);
-  console.log(initialCards);
-
+  function handleUpdateUser(data) {
+    Api.editUserInfo(data)
+      .then(
+        (data) => {
+          console.log(data)
+          setCurrentUser(data);
+          closeAllPopups();
+        },
+        (err) => {
+          console.log(data)
+          console.log(err);
+        }
+      )
+  }
+  function handleUpdateAvatar(data) {
+    Api.editAvatar(data)
+      .then(
+        (data) => {
+          console.log(data)
+          setCurrentUser(data);
+          closeAllPopups();
+        },
+        (err) => {
+          console.log(data)
+          console.log(err);
+        }
+      )
+  }
   function handleCardClick(setLink, setName) {
-    console.log("напас");
-    console.log(setLink, setName);
     setSelectedCard({
       link: setLink,
       name: setName,
     });
     setIsCardPopupOpen(true);
   }
-
-  function handleConfirmationClick() {
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    Api.changeLikeCardStatus(card._id, isLiked)
+      .then(
+        (newCard) => {
+          const newCards = initialCards.map((currentCard) => currentCard._id === card._id ? newCard : currentCard)
+          setCardData(newCards);
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+  }
+  function handleAddCardSubmit(data) {
+    Api.addCard(data)
+      .then(
+        (newCard) => {
+          setCardData([newCard, ...initialCards]);
+          closeAllPopups();
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+  }
+  function handleCardDelete(evt) {
+    evt.preventDefault();
+    Api.deleteCard(cardForDelete._id)
+      .then(
+        () => {
+          const newCards = initialCards.filter((elem) => elem !== cardForDelete);
+          setCardData(newCards);
+          closeAllPopups();
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+  }
+  function handleConfirmationClick(card) {
     setIsConfirmationPopupOpen(true);
+    setCardForDelete(card)
   }
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -54,8 +128,10 @@ function App(props) {
     setIsConfirmationPopupOpen(false);
     setIsCardPopupOpen(false);
   }
+  console.log(currentUser)
   return (
     <>
+    <CurrentUserContext.Provider value={currentUser}>
       <Header />
       <Main
         onEditProfile={handleEditProfileClick}
@@ -68,113 +144,44 @@ function App(props) {
           card = {element}
           onConfirmationProfile={handleConfirmationClick}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
         />)
        })
         }
       />
       <Footer />
-      <PopupWithForm
+      <EditProfilePopup
         title="Редактировать профиль"
         name="edit"
         isOpen={isEditProfilePopupOpen}
+        currentUser={currentUser}
+        onUpdateUser={handleUpdateUser}
         isClose={closeAllPopups}
-        isOverlay={closeAllPopups}
-        childrens={
-          <>
-            <input
-              name="fieldName"
-              type="text"
-              className="popup__field field-name"
-              pattern="[0-9А-Яа-яa-zA-Z- ]{2,}"
-              placeholder="Имя"
-              minLength="2"
-              maxLength="40"
-              required
-            />
-            <p className="popup__error-block">
-              <span className="popup__field-error fieldName-error"></span>
-            </p>
-            <input
-              name="fieldJob"
-              type="text"
-              className="popup__field field-job"
-              pattern="[0-9А-Яа-яa-zA-Z- ]{2,}"
-              placeholder="О себе"
-              minLength="2"
-              maxLength="200"
-              required
-            />
-            <p  className="popup__error-block">
-              <span  className="popup__field-error fieldJob-error"></span>
-            </p>
-          </>
-        }
         buttonTitle="Сохранить"
       />
-      <PopupWithForm
+      <AddProfilePopup
         title="Добавить карточку"
         name="Add"
         isOpen={isAddPlacePopupOpen}
+        onAddCard={handleAddCardSubmit}
         isClose={closeAllPopups}
-        isOverlay={closeAllPopups}
-        childrens={
-          <>
-            <input
-              name="fieldMesto"
-              type="text"
-              className="popup__field field-alt"
-              placeholder="Название"
-              pattern="[0-9А-Яа-яa-zA-Z- ]{2,}"
-              minLength="2"
-              maxLength="30"
-              required
-            />
-            <p className="popup__error-block">
-              <span className="popup__field-error fieldMesto-error"></span>
-            </p>
-            <input
-              name="fieldSrc"
-              type="url"
-              className="popup__field field-src"
-              placeholder="Ссылка на картинку"
-              required
-            />
-            <p className="popup__error-block">
-              <span className="popup__field-error fieldSrc-error"></span>
-            </p>
-          </>
-        }
         buttonTitle="Сохранить"
       />
-      <PopupWithForm
+      <EditAvatarPopupp
         title="Обновить аватар"
         name="Avatar"
+        onUpdateAvatar={handleUpdateAvatar}
         isOpen={isEditAvatarPopupOpen}
         isClose={closeAllPopups}
-        isOverlay={closeAllPopups}
-        childrens={
-          <>
-            {" "}
-            <input
-              name="fieldAvatarSrc"
-              type="url"
-              className="popup__field field-avatr-src"
-              placeholder="Ссылка на картинку"
-              required
-            />
-            <p className="popup__error-block">
-              <span className="popup__field-error fieldAvatarSrc-error"></span>
-            </p>
-          </>
-        }
         buttonTitle="Сохранить"
       />
-      <PopupWithForm
+      <PopupConfirm
         title="Вы уверены?"
         name="Confirmation"
         isOpen={isConfirmationPopupOpen}
         isClose={closeAllPopups}
         isOverlay={closeAllPopups}
+        onSubmit={handleCardDelete}
         buttonTitle="Да"
       />
       <ImagePopup
@@ -183,6 +190,7 @@ function App(props) {
         onOpen={isCardPopupOpen}
         isOverlay={closeAllPopups}
       />
+      </CurrentUserContext.Provider>
     </>
   );
 }

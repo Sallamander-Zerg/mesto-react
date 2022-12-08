@@ -1,11 +1,26 @@
 import { useEffect, useState } from "react";
+import { CurrentUserContext } from "../context/CurrentUserContext";
+import React from 'react';
 const Card = (props) => {
-  console.log(props.card)
+const currentUser = React.useContext(CurrentUserContext);
+const isOwn = props.card.owner._id === currentUser._id;
+const isLiked = props.card.likes.some(i => i._id === currentUser._id);
+const cardDeleteButtonClassName = (isOwn ? 'element__delete' : 'element__delete_hidden'); 
+const cardLikeButtonClassName = (isLiked ? 'element__like-button element__like-button_active' : 'element__like-button'); 
+function handleLikeClick() {
+  props.onCardLike(props.card);
+}
+
+function handleDeleteRequest() {
+  props.onCardDeleteRequest(props.card);
+}
   return(
-    <article className="element" key={props.card.id}>
+    <article className="element" key={props.card._id}>
     <button
-      className="element__delete"
-      onClick={props.onConfirmationProfile}
+      className={cardDeleteButtonClassName}
+      onClick={()=>{
+        props.onConfirmationProfile(props.card)
+      }}
     ></button>
     <img
       className="element__photo"
@@ -20,7 +35,7 @@ const Card = (props) => {
         {props.card.name ? props.card.name : "ошибка"}
       </h2>
       <div className="element__like-contaner">
-        <button type="button" className="element__like-button"></button>
+        <button type="button" className={cardLikeButtonClassName} onClick={handleLikeClick}></button>
         <span className="element__likes-number">{props.card.likes.length}</span>
       </div>
     </div>

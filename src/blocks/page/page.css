@@ -1,4 +1,12 @@
 .page {
   background-color: #000000;
+  width: 100%;
+  display: grid;
   font-family: "Inter", Arial, sans-serif;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, auto);
+  grid-template-areas:
+    "header header header header"
+    "conntent conntent conntent conntent"
+    "footer footer footer footer";
 }
