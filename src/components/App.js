@@ -3,7 +3,6 @@ import Footer from "./Footer.js";
 import Main from "./Main";
 import React from 'react';
 import { useState } from "react";
-import Card from "./Card";
 import ImagePopup from "./ImagePopup";
 import { CurrentUserContext } from'../context/CurrentUserContext';
 import { default as Api } from "../utils/Api.js";
@@ -99,9 +98,9 @@ function App() {
     Api.deleteCard(cardForDelete._id)
       .then(
         () => {
-          const newCards = initialCards.filter((elem) => elem !== cardForDelete);
-          setCardData(newCards);
-          closeAllPopups();
+        const newCards = initialCards.filter((elem) => elem !== cardForDelete);
+        setCardData(newCards);
+        closeAllPopups();
         },
         (err) => {
           console.log(err);
@@ -128,7 +127,6 @@ function App() {
     setIsConfirmationPopupOpen(false);
     setIsCardPopupOpen(false);
   }
-  console.log(currentUser)
   return (
     <>
     <CurrentUserContext.Provider value={currentUser}>
@@ -137,23 +135,16 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onAddProfile={handleAddPlaceClick}
         onAvatarProfile={handleEditAvatarClick}
-        Cards={
-       initialCards.map(element=>{
-        return( <Card
-          key ={element._id}
-          card = {element}
-          onConfirmationProfile={handleConfirmationClick}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
-        />)
-       })
-        }
+        Cards={initialCards}
+        handleConfirmationClick={handleConfirmationClick}
+        handleCardClick={handleCardClick}
+        handleCardLike={handleCardLike}
       />
       <Footer />
       <EditProfilePopup
         title="Редактировать профиль"
         name="edit"
-        isOpen={isEditProfilePopupOpen}
+        onOpen={isEditProfilePopupOpen}
         currentUser={currentUser}
         onUpdateUser={handleUpdateUser}
         isClose={closeAllPopups}
@@ -162,7 +153,7 @@ function App() {
       <AddProfilePopup
         title="Добавить карточку"
         name="Add"
-        isOpen={isAddPlacePopupOpen}
+        onOpen={isAddPlacePopupOpen}
         onAddCard={handleAddCardSubmit}
         isClose={closeAllPopups}
         buttonTitle="Сохранить"
@@ -171,14 +162,14 @@ function App() {
         title="Обновить аватар"
         name="Avatar"
         onUpdateAvatar={handleUpdateAvatar}
-        isOpen={isEditAvatarPopupOpen}
+        onOpen={isEditAvatarPopupOpen}
         isClose={closeAllPopups}
         buttonTitle="Сохранить"
       />
       <PopupConfirm
         title="Вы уверены?"
         name="Confirmation"
-        isOpen={isConfirmationPopupOpen}
+        onOpen={isConfirmationPopupOpen}
         isClose={closeAllPopups}
         isOverlay={closeAllPopups}
         onSubmit={handleCardDelete}
@@ -188,7 +179,6 @@ function App() {
         card={selectedCard}
         onClose={closeAllPopups}
         onOpen={isCardPopupOpen}
-        isOverlay={closeAllPopups}
       />
       </CurrentUserContext.Provider>
     </>

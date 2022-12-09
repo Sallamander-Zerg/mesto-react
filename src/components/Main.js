@@ -1,5 +1,6 @@
 import avatar from '../images/avatar.jpg';
 import { CurrentUserContext } from'../context/CurrentUserContext';
+import Card from './Card';
 import React from 'react';
 function Main(props) {
     const currentUser = React.useContext(CurrentUserContext);
@@ -18,7 +19,17 @@ function Main(props) {
     <button type="button"  className="profile__add-button"  data-modal="AddCard" onClick={props.onAddProfile}></button>
 </section>
 <section className="elements">
-{props.Cards}
+{props.Cards.map(element=>{
+    return(
+        <Card
+          key ={element._id}
+          card = {element}
+          onConfirmationProfile={props.handleConfirmationClick}
+          onCardClick={props.handleCardClick}
+          onCardLike={props.handleCardLike}
+        />
+)})
+}
 </section>
 </main>
 

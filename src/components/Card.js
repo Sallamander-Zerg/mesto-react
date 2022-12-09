@@ -14,7 +14,7 @@ function handleLikeClick() {
 function handleDeleteRequest() {
   props.onCardDeleteRequest(props.card);
 }
-  return(
+      return(
     <article className="element" key={props.card._id}>
     <button
       className={cardDeleteButtonClassName}
@@ -40,6 +40,6 @@ function handleDeleteRequest() {
       </div>
     </div>
   </article>
-);
-};
+  )
+}
 export default Card;

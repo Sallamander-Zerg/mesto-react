@@ -19,7 +19,7 @@ function AddProfilePopup(props) {
   return (
     <div
       className={`popup popup_type_${props.name} ${
-        props.isOpen ? "popup_active" : ""
+        props.onOpen ? "popup_active" : ""
       }`}
       data-modal="edituser"
     >
@@ -33,7 +33,6 @@ function AddProfilePopup(props) {
         <form className="popup__form " name={`${props.name}`} id="formEdit"  onSubmit={handleSubmit}>
           <h2 className="popup__title">{props.title}</h2>
           <input
-              defaultValue=""
               value={name}
               name="fieldMesto"
               type="text"
@@ -49,7 +48,6 @@ function AddProfilePopup(props) {
               <span className="popup__field-error fieldMesto-error"></span>
             </p>
             <input
-              defaultValue=""
               value={link}
               name="fieldSrc"
               type="url"
