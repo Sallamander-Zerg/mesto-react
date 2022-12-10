@@ -33,7 +33,7 @@ function AddProfilePopup(props) {
         <form className="popup__form " name={`${props.name}`} id="formEdit"  onSubmit={handleSubmit}>
           <h2 className="popup__title">{props.title}</h2>
           <input
-              value={name}
+              value={name||''}
               name="fieldMesto"
               type="text"
               className="popup__field field-alt"
@@ -48,7 +48,7 @@ function AddProfilePopup(props) {
               <span className="popup__field-error fieldMesto-error"></span>
             </p>
             <input
-              value={link}
+              value={link||''}
               name="fieldSrc"
               type="url"
               className="popup__field field-src"

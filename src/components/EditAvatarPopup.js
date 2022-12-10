@@ -35,10 +35,9 @@ function EditAvatarPopupp(props) {
             <input
               name="fieldAvatarSrc"
               type="url"
-              defaultValue={currentUser.avatar}
               className="popup__field field-avatr-src"
               placeholder="Ссылка на картинку"
-              value={avatar}
+              value={avatar||''}
               onChange={handleChangelink}
               required
             />

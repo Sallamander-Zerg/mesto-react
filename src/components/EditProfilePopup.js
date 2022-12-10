@@ -36,12 +36,11 @@ function EditProfilePopup(props) {
           data-modal="edituser"
           onClick={props.isClose}
         ></button>
-        <form className="popup__form " name={`${props.name}`} id="formEdit"  onSubmit={handleSubmit}>
+        <form className="popup__form " name={`${props.name}`}   onSubmit={handleSubmit}>
           <h2 className="popup__title">{props.title}</h2>
           <input
-          defaultValue={currentUser.name}
-            value={name}
-            name="fieldName"
+            value={name||''}
+            name="name"
             type="text"
             className="popup__field field-name"
             placeholder="Имя"
@@ -54,9 +53,8 @@ function EditProfilePopup(props) {
             <span className="popup__field-error fieldName-error"></span>
           </p>
           <input
-          defaultValue={currentUser.name}
-            value={description}
-            name="fieldJob"
+            value={description||''}
+            name="description"
             type="text"
             className="popup__field field-job"
             placeholder="О себе"
@@ -72,7 +70,6 @@ function EditProfilePopup(props) {
             type="submit"
             className="popup__save-button"
             name={`${props.name}`}
-            id="saveform"
           >
             {props.buttonTitle}
           </button>
