@@ -6,11 +6,18 @@ import { useState } from "react";
 import ImagePopup from "./ImagePopup";
 import { CurrentUserContext } from'../context/CurrentUserContext';
 import { default as Api } from "../utils/Api.js";
+import { Route, Switch, useHistory } from 'react-router-dom';
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopupp from "./EditAvatarPopup";
 import AddProfilePopup from "./AddProfilePopup"
 import PopupConfirm from"./PopupConfirm"
+import SignUp from "./SignUp"
+import SignIn from "./SignIn"
+import Auth from "../utils/auth"
 function App() {
+  const [loggedIn, setSignIn] = React.useState(false);
+  const [isSuccessSignUp, setIsSuccessSignUp] = React.useState(false);
+  const [authorizationUserEmail, setAutorizationUserEmail] = React.useState(null);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -107,6 +114,61 @@ function App() {
         }
       )
   }
+  function handleRegistration(data) {
+    Auth.register(data)
+      .then(
+        (data) => {
+          setIsSuccessSignUp(true);
+          history.push('/sign-in')
+        },
+        (err) => {
+          console.log(err);
+          setIsSuccessSignUp(false);
+          // handleInfoTooltipPopupOpen();
+        })
+  }
+
+  function handleAuthorization(data) {
+    Auth.authorize(data)
+      .then(
+        (data) => {
+          setSignIn(true);
+          localStorage.setItem('jwt', data.token);
+          history.push('/');
+          handleCheckToken();
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+  }
+
+  const handleCheckToken = React.useCallback(
+    () => {
+      const token = localStorage.getItem('jwt');
+      Auth.checkToken(token)
+        .then(
+          (data) => {
+            setAutorizationUserEmail(data.data.email);
+            setLoggedIn(true);
+            history.push('/');
+          },
+          (err) => {
+            console.log(err);
+          }
+        )
+
+    },
+    [history],
+  )
+
+  React.useEffect(() => {
+    const token = localStorage.getItem('jwt');
+
+    if (token) {
+      handleCheckToken();
+    }
+  }, [handleCheckToken])
   function handleConfirmationClick(card) {
     setIsConfirmationPopupOpen(true);
     setCardForDelete(card)
@@ -131,7 +193,32 @@ function App() {
     <>
     <CurrentUserContext.Provider value={currentUser}>
       <Header />
-      <Main
+      <Switch>
+        <Route path="/sign-up">
+          <SignUp
+            onRegistration={handleRegistration}
+          />
+        </Route>
+        <Route path="/sign-in">
+          <SignIn
+            onAuthorization={handleAuthorization}
+            onCheckToken={handleCheckToken}
+          />
+        </Route>
+        <ProtectedRoute
+          path="/"
+          component={Main}
+          loggedIn={loggedIn}
+          onEditProfile={handleEditProfileClick}
+          onAddProfile={handleAddPlaceClick}
+          onAvatarProfile={handleEditAvatarClick}
+          Cards={initialCards}
+          handleConfirmationClick={handleConfirmationClick}
+          handleCardClick={handleCardClick}
+          handleCardLike={handleCardLike}
+        />
+      </Switch>
+      {/* <Main
         onEditProfile={handleEditProfileClick}
         onAddProfile={handleAddPlaceClick}
         onAvatarProfile={handleEditAvatarClick}
@@ -139,7 +226,7 @@ function App() {
         handleConfirmationClick={handleConfirmationClick}
         handleCardClick={handleCardClick}
         handleCardLike={handleCardLike}
-      />
+      /> */}
       <Footer />
       <EditProfilePopup
         title="Редактировать профиль"
@@ -180,6 +267,16 @@ function App() {
         onClose={closeAllPopups}
         onOpen={isCardPopupOpen}
       />
+      {/* <PopupWithForm
+      title="Регестрация"
+      name="Rergistration"
+      buttonTitle="Зарегестрироваться"
+      /> */}
+      {/* <PopupWithForm
+      title="Войти"
+      name="Login"
+      buttonTitle="Войти"
+      /> */}
       </CurrentUserContext.Provider>
     </>
   );

@@ -1,0 +1,27 @@
+.sign__save-button {
+  min-width: 358px;
+  min-height: 50px;
+  justify-self: center;
+  color: #000;
+  background: #fff;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  margin: 200px 36px 15px;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+}
+.sign__save-button:hover {
+  opacity: 0.8;
+}
+@media screen and (max-width: 948px) {
+  .sign__save-button {
+    font-size: 14px;
+    line-height: 17px;
+    margin: 45px 22px 25px;
+    min-width: 238px;
+    min-height: 46px;
+  }
+}

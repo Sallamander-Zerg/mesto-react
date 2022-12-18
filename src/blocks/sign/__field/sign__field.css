@@ -1,0 +1,23 @@
+.sign__field {
+  max-width: 358px;
+  width: 100%;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  border-top: #000;
+  border-left: #000;
+  border-right: #000;
+  background: #000;
+  padding-bottom: 13px;
+}
+.sign__field::placeholder {
+  color: white;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+@media screen and (max-width: 948px) {
+  .sign__field {
+    max-width: 238px;
+  }
+}
