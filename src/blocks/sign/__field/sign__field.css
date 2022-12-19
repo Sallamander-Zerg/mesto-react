@@ -9,6 +9,7 @@
   border-right: #000;
   background: #000;
   padding-bottom: 13px;
+  color: #fff;
 }
 .sign__field::placeholder {
   color: white;

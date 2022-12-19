@@ -9,7 +9,7 @@
   justify-self: center;
   margin-bottom: 40px;
   grid-template-columns: repeat(2, auto);
-  grid-template-areas: "header_logo header_logo";
+  grid-template-areas: "header_logo header__menu-contaner";
 }
 @media screen and (max-width: 948px) {
   .header {

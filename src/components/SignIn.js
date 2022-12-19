@@ -1,13 +1,20 @@
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import React from 'react';
-function PopupWithForm(props){
-  const linkMarkup = (
-    <p className="sign__text" to="sign-in">Уже зарегистрированы? Войти</p>
-  )
+function SignIn(props){
+    const [email, setEmail] = React.useState(''); 
+      const [password,setPassword] = React.useState('');
+        function handleChangeEmail(e) {
+          setEmail(e.target.value);
+        }
+        function handleChangePassword(e) {
+          setPassword(e.target.value);
+        }
   function handleSubmit(evt) {
     evt.preventDefault();
-    onRegistration(values);
-    resetForm();
+    props.onAuthorization({
+      password: password,
+      email: email,
+    });
   }
     return(
     <div 
@@ -17,6 +24,7 @@ function PopupWithForm(props){
         <form className="sign__form " name={`${props.name}`} id="formEdit" submit={handleSubmit}>
         <h2 className="sign__title">{props.title}</h2>
         <input
+            value={email||''}
             name="name"
             type="email"
             className="sign__field field-name"
@@ -24,11 +32,13 @@ function PopupWithForm(props){
             minLength="2"
             maxLength="40"
             required
+            onChange={handleChangeEmail}
           />
           <p className="sign__error-block">
             <span className="sign__field-error fieldName-error"></span>
           </p>
           <input
+           value={password||''}
             name="description"
             type="password"
             className="sign__field field-job"
@@ -36,15 +46,15 @@ function PopupWithForm(props){
             minLength="2"
             maxLength="200"
             required
+            onChange={handleChangePassword}
           />
           <p className="sign__error-block">
             <span className="sign__field-error fieldJob-error"></span>
           </p>
         <button type="submit"  className="sign__save-button" name={`${props.name}`} id="saveform">{props.buttonTitle}</button>
-        {linkMarkup && linkMarkup}
         </form>
     </div>
   </div>
   );
 }
-export default PopupWithForm
+export default SignIn

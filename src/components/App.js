@@ -6,13 +6,14 @@ import { useState } from "react";
 import ImagePopup from "./ImagePopup";
 import { CurrentUserContext } from'../context/CurrentUserContext';
 import { default as Api } from "../utils/Api.js";
-import { Route, Switch, useHistory } from 'react-router-dom';
+import {BrowserRouter, Route, Switch, useHistory } from 'react-router-dom';
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopupp from "./EditAvatarPopup";
 import AddProfilePopup from "./AddProfilePopup"
 import PopupConfirm from"./PopupConfirm"
 import SignUp from "./SignUp"
 import SignIn from "./SignIn"
+import ProtectedRoute from "./ProtectedRoute";
 import Auth from "../utils/auth"
 function App() {
   const [loggedIn, setSignIn] = React.useState(false);
@@ -28,6 +29,7 @@ function App() {
   const [isLoadingSetUserInfo, setIsLoadingSetUserInfo] = React.useState(false);
   const [currentUser, setCurrentUser] =React.useState({});
   const [cardForDelete, setCardForDelete] = React.useState({})
+  const history = useHistory();
   React.useEffect(()=>{
         Api.getUserInfo()
         .then((res)=>{
@@ -114,8 +116,13 @@ function App() {
         }
       )
   }
+  function handleSingOut() {
+    setSignIn(false);
+    localStorage.removeItem('jwt');
+    history.push('/sign-in');
+  }
   function handleRegistration(data) {
-    Auth.register(data)
+    Auth.Register(data)
       .then(
         (data) => {
           setIsSuccessSignUp(true);
@@ -129,12 +136,12 @@ function App() {
   }
 
   function handleAuthorization(data) {
-    Auth.authorize(data)
+    Auth.Login(data)
       .then(
         (data) => {
           setSignIn(true);
           localStorage.setItem('jwt', data.token);
-          history.push('/');
+          history.push("/");
           handleCheckToken();
         },
         (err) => {
@@ -150,8 +157,8 @@ function App() {
         .then(
           (data) => {
             setAutorizationUserEmail(data.data.email);
-            setLoggedIn(true);
-            history.push('/');
+            setSignIn(true);
+            history.push("/");
           },
           (err) => {
             console.log(err);
@@ -192,17 +199,24 @@ function App() {
   return (
     <>
     <CurrentUserContext.Provider value={currentUser}>
-      <Header />
+      <Header/>
+      {/* <BrowserRouter>
       <Switch>
         <Route path="/sign-up">
           <SignUp
             onRegistration={handleRegistration}
+            title="Регестрация"
+            name="Rergistration"
+            buttonTitle="Зарегестрироваться"
           />
         </Route>
         <Route path="/sign-in">
           <SignIn
             onAuthorization={handleAuthorization}
             onCheckToken={handleCheckToken}
+            title="Войти"
+            name="Login"
+            buttonTitle="Войти"
           />
         </Route>
         <ProtectedRoute
@@ -218,15 +232,16 @@ function App() {
           handleCardLike={handleCardLike}
         />
       </Switch>
-      {/* <Main
-        onEditProfile={handleEditProfileClick}
-        onAddProfile={handleAddPlaceClick}
-        onAvatarProfile={handleEditAvatarClick}
-        Cards={initialCards}
-        handleConfirmationClick={handleConfirmationClick}
-        handleCardClick={handleCardClick}
-        handleCardLike={handleCardLike}
-      /> */}
+      </BrowserRouter> */}
+       <Main
+onEditProfile={handleEditProfileClick}
+onAddProfile={handleAddPlaceClick}
+onAvatarProfile={handleEditAvatarClick}
+Cards={initialCards}
+handleConfirmationClick={handleConfirmationClick}
+handleCardClick={handleCardClick}
+handleCardLike={handleCardLike}
+/>
       <Footer />
       <EditProfilePopup
         title="Редактировать профиль"
@@ -267,16 +282,6 @@ function App() {
         onClose={closeAllPopups}
         onOpen={isCardPopupOpen}
       />
-      {/* <PopupWithForm
-      title="Регестрация"
-      name="Rergistration"
-      buttonTitle="Зарегестрироваться"
-      /> */}
-      {/* <PopupWithForm
-      title="Войти"
-      name="Login"
-      buttonTitle="Войти"
-      /> */}
       </CurrentUserContext.Provider>
     </>
   );
